@@ -59,9 +59,9 @@ async function promptTILInput(context: vscode.ExtensionContext) {
     existing.unshift(tilData);
     fs.writeFileSync(tilFile, JSON.stringify(existing, null, 2), 'utf-8');
 
-    vscode.window.showInformationMessage('✅ TIL saved!');
+    vscode.window.showInformationMessage('TIL logged! 📝');
   } catch (err: any) {
     console.error(err);
-    vscode.window.showErrorMessage(`❌ Failed to save TIL: ${err.message}`);
+    vscode.window.showErrorMessage(`⚠️ Something went wrong saving TIL: ${err.message}`);
   }
 }
