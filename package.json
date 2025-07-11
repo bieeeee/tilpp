@@ -28,7 +28,11 @@
     "commands": [
       {
         "command": "tilpp.addTIL",
-        "title": "TIL: Add TIL"
+        "title": "TIL++: Add TIL"
+      },
+      {
+        "command": "tilpp.viewTILs",
+        "title": "TIL++: View Saved TILs"
       }
     ]
   },
