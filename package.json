@@ -2,6 +2,7 @@
   "name": "tilpp",
   "displayName": "TIL++",
   "description": "A lightweight in-editor memory tool to record, recall, and resurface what you've learned — right from the place you learn it.",
+  "publisher": "hanbyeolkwon",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.97.0"
