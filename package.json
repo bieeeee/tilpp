@@ -1,21 +1,21 @@
 {
-  "name": "til",
-  "displayName": "TIL",
+  "name": "tilpp",
+  "displayName": "TIL++",
   "description": "A lightweight in-editor memory tool to record, recall, and resurface what you've learned — right from the place you learn it.",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.102.0"
+    "vscode": "^1.97.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": ["onCommand:tilpp.addpp"],
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "til.helloWorld",
-        "title": "Hello World"
+        "command": "tilpp.addTIL",
+        "title": "TIL: Add TIL"
       }
     ]
   },
