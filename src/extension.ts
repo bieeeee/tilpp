@@ -3,11 +3,13 @@ import * as fs from 'fs';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('TIL++ is active!');
+	const config = vscode.workspace.getConfiguration('tilpp');
+	const intervalMinutes = config.get<number>('reminderIntervalMinutes', 10);
 
   const disposable = vscode.commands.registerCommand('tilpp.addTIL', async () => {
 		setInterval(() => {
 			remindToAddTIL(context);
-		}, 10 * 1000);
+		}, intervalMinutes * 60 * 1000);
   });
 
   context.subscriptions.push(disposable);

@@ -12,6 +12,18 @@
   "activationEvents": ["onCommand:tilpp.addpp"],
   "main": "./dist/extension.js",
   "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "TIL++ Settings",
+      "properties": {
+        "tilpp.reminderIntervalSeconds": {
+          "type": "number",
+          "default": 10,
+          "minimum": 1,
+          "description": "Interval in minutes between TIL reminders."
+        }
+      }
+    },
     "commands": [
       {
         "command": "tilpp.addTIL",
