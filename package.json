@@ -10,18 +10,21 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": ["onCommand:tilpp.addpp"],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./dist/extension.js",
   "contributes": {
     "configuration": {
-      "type": "object",
       "title": "TIL++ Settings",
       "properties": {
-        "tilpp.reminderIntervalSeconds": {
-          "type": "number",
-          "default": 10,
-          "minimum": 1,
-          "description": "Interval in minutes between TIL reminders."
+        "tilpp.reminderInterval": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "default": 1,
+          "description": "Reminder interval in minutes (or 'never')"
         }
       }
     },
@@ -51,16 +54,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.102.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/vscode": "^1.97.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
-    "eslint": "^9.25.1",
+    "@vscode/test-cli": "^0.0.11",
+    "@vscode/test-electron": "^2.5.2",
     "esbuild": "^0.25.3",
+    "eslint": "^9.25.1",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.8.3",
-    "@vscode/test-cli": "^0.0.11",
-    "@vscode/test-electron": "^2.5.2"
+    "uuid": "^11.1.0"
   }
 }
