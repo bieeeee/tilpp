@@ -1,7 +1,9 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import { getTILHtml } from '../utils';
 
-export function viewTIL(context: vscode.ExtensionContext) {
+export async function viewTIL(context: vscode.ExtensionContext) {
+
   const panel = vscode.window.createWebviewPanel(
     'tilppView',
     '🧠 TIL++',
@@ -26,37 +28,4 @@ export function viewTIL(context: vscode.ExtensionContext) {
 
   const htmlContent = getTILHtml(tilData);
   panel.webview.html = htmlContent;
-}
-
-
-function getTILHtml(tils: { content: string; createdAt: string }[]): string {
-  const listItems = tils
-    .map(
-      (til) => `
-      <li style="margin-bottom: 1em;">
-        <div><strong>${new Date(til.createdAt).toLocaleString()}</strong></div>
-        <div>${escapeHtml(til.content)}</div>
-      </li>`
-    )
-    .join('\n');
-
-  return `
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>TIL++</title>
-  </head>
-  <body>
-    <h2>TIL++ 📝 What You’ve Learned</h2>
-    <ul style="list-style: none; padding: 0;">${listItems}</ul>
-  </body>
-  </html>`;
-}
-
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
 }
