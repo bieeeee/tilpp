@@ -1,74 +1,46 @@
 import * as vscode from 'vscode';
-import * as fs from 'fs';
-import { viewTIL } from './viewTIL';
+import { TIL } from '../types';
+import { TILStorage } from '../storage';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function addTIL(context: vscode.ExtensionContext) {
-  const config = vscode.workspace.getConfiguration('tilpp');
-  const intervalMinutes = config.get<number>('reminderIntervalMinutes', 1);
+  const storage = new TILStorage(context);
 
-  return  (
-    setInterval(() => {
-      remindToAddTIL(context);
-    }, intervalMinutes * 60 * 1000)
-  );
-}
-
-async function remindToAddTIL(context: vscode.ExtensionContext) {
-  const selection = await vscode.window.showInformationMessage(
-    '🧠 Ready to log something you learned?',
-    'Add TIL'
-  );
-
-  if (selection === 'Add TIL') {
-    await promptTILInput(context);
-  }
-}
-
-async function promptTILInput(context: vscode.ExtensionContext) {
-  const input = await vscode.window.showInputBox({
+  const content = await vscode.window.showInputBox({
     prompt: 'What did you learn today?',
     placeHolder: 'e.g. TanStack Table rowSelectionStateRef usage',
+    validateInput: (value) => {
+      if (!value.trim()) {
+        return 'Please enter something you learned';
+      }
+      return null;
+    }
   });
 
-  if (!input || input.trim() === '') {
-    vscode.window.showWarningMessage('No TIL entered. Cancelled.');
+  if (!content) {
     return;
   }
 
-  const tilData = {
-    content: input.trim(),
-    createdAt: new Date().toISOString(),
+  const til: TIL = {
+    id: uuidv4(),
+    content: content.trim(),
+    createdAt: new Date().toISOString()
   };
 
   try {
-    const storageFolder = context.globalStorageUri.fsPath;
-    const tilFile = vscode.Uri.joinPath(context.globalStorageUri, 'tils.json').fsPath;
+    await storage.addTIL(til);
+    
+    const selection = await vscode.window.showInformationMessage(
+      `TIL logged! 📝`,
+      'View All', 'Add Another'
+    );
 
-    fs.mkdirSync(storageFolder, { recursive: true });
-
-    let existing: any[] = [];
-    if (fs.existsSync(tilFile)) {
-      const raw = fs.readFileSync(tilFile, 'utf-8');
-      existing = JSON.parse(raw);
+    if (selection === 'View All') {
+      vscode.commands.executeCommand('tilpp.viewTILs');
+    } else if (selection === 'Add Another') {
+      vscode.commands.executeCommand('tilpp.addTIL');
     }
-
-    existing.unshift(tilData);
-    fs.writeFileSync(tilFile, JSON.stringify(existing, null, 2), 'utf-8');
-
-    showTILSavedMessage(context);
   } catch (err: any) {
-    console.error(err);
-    vscode.window.showErrorMessage(`⚠️ Something went wrong saving TIL: ${err.message}`);
-  }
-}
-
-async function showTILSavedMessage(context: vscode.ExtensionContext) {
-  const selection = await vscode.window.showInformationMessage(
-    'TIL logged! 📝',
-    'View'
-  );
-
-  if (selection === 'View') {
-    viewTIL(context);
+    vscode.window.showErrorMessage(`Failed to save TIL: ${err.message}`);
   }
 }
