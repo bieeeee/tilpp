@@ -1,14 +1,16 @@
 {
   "name": "tilpp",
   "displayName": "TIL++",
-  "description": "A lightweight in-editor memory tool to record, recall, and resurface what you've learned — right from the place you learn it.",
+  "description": "A lightweight in-editor memory tool for capturing 'Today I Learned' (TIL) moments — record, recall, and resurface what you've learned, right from the place you learn it.",
+  "icon": "icon.png",
   "publisher": "hanbyeolkwon",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.97.0"
   },
   "categories": [
-    "Other"
+    "Other",
+    "Notebooks"
   ],
   "activationEvents": [
     "onStartupFinished"
@@ -23,7 +25,7 @@
             "number",
             "string"
           ],
-          "default": 1,
+          "default": 60,
           "description": "Reminder interval in minutes (or 'never')"
         }
       }
