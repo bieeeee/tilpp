@@ -1,4 +1,4 @@
-# TIL++
+# TIL++ (Today I Learned)
 
 A VSCode extension to help you track and remember what you learn every day. TIL++ (Today I Learned) makes it easy to capture those "aha!" moments while coding, with gentle reminders to document your learning journey.
 
@@ -25,13 +25,7 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-### 0.0.1
-
-Initial release of TIL++
-
 
 ## License
 
 MIT
-
-**Enjoy!**
