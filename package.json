@@ -30,28 +30,18 @@
         },
         "tilpp.autoCaptureCommits": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Automatically capture commits as TILs"
-        },
-        "tilpp.commitPatterns": {
-          "type": "array",
-          "default": ["TIL:", "feat:", "fix:", "discovered", "found out"],
-          "description": "Commit message patterns that trigger auto-capture"
         },
         "tilpp.commitTemplate": {
           "type": "string",
-          "default": "Committed: {message}",
+          "default": "[commit] {message}",
           "description": "Template for formatting commit messages as TILs"
         },
         "tilpp.includeCommitHash": {
           "type": "boolean",
           "default": true,
           "description": "Include commit hash in TIL"
-        },
-        "tilpp.notifyOnCommitCapture": {
-          "type": "boolean",
-          "default": true,
-          "description": "Show notification when commit is captured"
         }
       }
     },

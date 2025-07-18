@@ -2,6 +2,8 @@ import * as vscode from 'vscode';
 import { addTIL } from './commands/addTIL';
 import { viewTIL } from './commands/viewTIL';
 import { ReminderManager } from './reminder';
+import { TILStorage } from './storage';
+import { GitIntegration, logLastCommit } from './commands/gitIntegration';
 
 let reminderManager: ReminderManager | undefined;
 
@@ -10,9 +12,15 @@ export function activate(context: vscode.ExtensionContext) {
 
   reminderManager = new ReminderManager(context);
 
+  const storage = new TILStorage(context);
+  const gitIntegration = new GitIntegration(context, storage);
+
+  gitIntegration.initialize().catch(console.error);
+
   context.subscriptions.push(
     vscode.commands.registerCommand('tilpp.addTIL', () => addTIL(context)),
-    vscode.commands.registerCommand('tilpp.viewTILs', () => viewTIL(context))
+    vscode.commands.registerCommand('tilpp.viewTILs', () => viewTIL(context)),
+    vscode.commands.registerCommand('tilpp.logLastCommit', () => logLastCommit(context))
   );
 
   // Start reminder loop
